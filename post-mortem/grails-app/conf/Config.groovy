@@ -96,6 +96,19 @@ environments {
     }
 }
 
+grails {
+	mail {
+		host = '192.168.50.2'
+		port = 25
+		username = ''
+		password = ''
+		props = ["mail.smtp.auth" : false,
+				 "mail.smtp.socketFactory.port" : 25,
+				 "mail.smtp.socketFactory.fallback" : false]
+
+	}
+}
+
 jcaptchas {
 	imageCaptcha = new GenericManageableCaptchaService(
 		new GenericCaptchaEngine(
@@ -136,9 +149,9 @@ def roles = [
 	]
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.postmortem.secutity.Person'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.postmortem.secutity.PersonAuthority'
-grails.plugins.springsecurity.authority.className = 'com.postmortem.secutity.Authority'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.postmortem.security.Person'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.postmortem.security.PersonAuthority'
+grails.plugins.springsecurity.authority.className = 'ccom.postmortem.security.Authority'
 grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = roles
 grails.plugins.springsecurity.password.algorithm = "SHA-1"

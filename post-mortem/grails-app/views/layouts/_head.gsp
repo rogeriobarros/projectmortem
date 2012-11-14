@@ -1,4 +1,4 @@
-<title><g:layoutTitle default="Post Mortem - Revele seus segredos sem culpa" /></title>
+<title>Post Mortem - Revele seus segredos sem culpa</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="Robots" content="index,follow" />

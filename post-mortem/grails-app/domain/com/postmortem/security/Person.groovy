@@ -22,7 +22,7 @@ class Person implements Serializable {
 	}
 
 	Set<Authority> getAuthorities() {
-		PersonAuthority.findAllByUser(this).collect { it.authority } as Set
+		PersonAuthority.findAllByUser(this).collect { it.role } as Set
 	}
 
 	def beforeInsert() {

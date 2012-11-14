@@ -3,7 +3,7 @@
 	<head>
 		<meta name="layout" content="main"/>
 		
-		${response.sendRedirect(createLink(controller: 'login', action: 'index').toString())}
+		${response.sendRedirect(createLink(controller: 'registration', action: 'create').toString())}
 	</head>
 	<body>
         <div id="pageBody">
