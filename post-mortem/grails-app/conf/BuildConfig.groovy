@@ -24,6 +24,13 @@ grails.project.dependency.resolution = {
 
         mavenLocal()
         mavenCentral()
+		
+		mavenRepo "http://repository.codehaus.org/"
+		mavenRepo "http://repo1.maven.org/maven2/"
+		mavenRepo "http://snapshots.repository.codehaus.org/"
+		mavenRepo "http://repository.jboss.com/maven2/"
+		mavenRepo "http://download.java.net/maven/2/"
+		mavenRepo "http://repository.codehaus.org"
 
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
@@ -34,7 +41,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-        // runtime 'mysql:mysql-connector-java:5.1.20'
+        runtime 'mysql:mysql-connector-java:5.1.20'
     }
 
     plugins {

@@ -1,3 +1,16 @@
+import grails.util.Environment
+
+import java.awt.*
+
+import com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator
+import com.octo.captcha.component.image.fontgenerator.RandomFontGenerator
+import com.octo.captcha.component.image.textpaster.NonLinearTextPaster
+import com.octo.captcha.component.image.wordtoimage.ComposedWordToImage
+import com.octo.captcha.component.word.wordgenerator.RandomWordGenerator
+import com.octo.captcha.engine.GenericCaptchaEngine
+import com.octo.captcha.image.gimpy.GimpyFactory
+import com.octo.captcha.service.multitype.GenericManageableCaptchaService
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -10,6 +23,20 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
+
+if(System.properties['appconfig.root']) {
+	def appcfgroot = System.properties['appconfig.root']
+	grails.config.locations = [ "file:///${appcfgroot}/config/appconfig.properties" ]
+} else {
+	def locations = ["classpath:appconfig.properties"]
+	if(Environment.current == Environment.TEST) {
+		locations << "classpath:test-appconfig.properties"
+	} else {
+		def hostName = InetAddress.getLocalHost().getHostName()
+		locations << "classpath:${hostName}-appconfig.properties"
+	}
+	grails.config.locations = locations
+}
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
@@ -54,10 +81,10 @@ grails.spring.bean.packages = []
 grails.web.disable.multipart=false
 
 // request parameters to mask when logging exceptions
-grails.exceptionresolver.params.exclude = ['password']
+grails.exceptionresolver.params.exclude = ['password', 'passwordConfirmation']
 
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
-grails.hibernate.cache.queries = false
+grails.hibernate.cache.queries = true
 
 environments {
     development {
@@ -69,23 +96,96 @@ environments {
     }
 }
 
-// log4j configuration
-log4j = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+jcaptchas {
+	imageCaptcha = new GenericManageableCaptchaService(
+		new GenericCaptchaEngine(
+			new GimpyFactory(
+				new RandomWordGenerator( "abcdefghijklmnopqrstuvwxyz1234567890" ),
+					new ComposedWordToImage(
+						new RandomFontGenerator( 20, // min font size
+												 30, // max font size
+												 [new Font("Arial", 0, 10)] as Font[]
+												),
+						new UniColorBackgroundGenerator( 140, // width
+														 35, // height
+														new Color(255, 255, 255)
+														),
+					   new NonLinearTextPaster( 6, // minimal length of text
+												6, // maximal length of text
+												new Color(0, 0, 0)
+											  )
+					)
+				)
+			),
+			180, // minGuarantedStorageDelayInSeconds
+			180000 // maxCaptchaStoreSize
+		 )
+ }
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+def adminConfigRoles = ['IS_AUTHENTICATED_ANONYMOUSLY']
+
+def roles = [
+	'/runtimeLogging/**' : adminConfigRoles,
+	'/content/**' : adminConfigRoles,
+	'/logout/**' : ['IS_AUTHENTICATED_FULLY'],
+	'/login/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/images/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/css/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/js/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/**' : ['IS_AUTHENTICATED_ANONYMOUSLY']
+	]
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.postmortem.secutity.Person'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.postmortem.secutity.PersonAuthority'
+grails.plugins.springsecurity.authority.className = 'com.postmortem.secutity.Authority'
+grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap
+grails.plugins.springsecurity.interceptUrlMap = roles
+grails.plugins.springsecurity.password.algorithm = "SHA-1"
+
+if(Environment.currentEnvironment == Environment.PRODUCTION) {
+	def authBasicFilters = 'httpSessionContextIntegrationFilterWithASCFalseBasicAuth,basicProcessingFilterBasicAuth,exceptionTranslationWithASCFilterBasicAuth,filterInvocationInterceptor'
+	grails.plugins.springsecurity.filterChain.chainMap = [
+		'/runtimeLogging/**': authBasicFilters,
+		'/content/**': authBasicFilters,
+		'/**': 'JOINED_FILTERS']
+}
+
+// log4j configuration
+String stacktraceName = System.getProperty('stacktrace')
+String fileNameLog = "/${appName}-stacktrace.log"
+String tempDir = System.getProperty('java.io.tmpdir')
+
+log4j = {
+	appenders {
+		console name:'stdout', layout:pattern(conversionPattern: '%d [%t] %-5p %c - %m%n')
+		environments {
+			production {
+				rollingFile name:"stacktrace", file:"${stacktraceName ? stacktraceName + fileNameLog : tempDir + fileNameLog}"
+			}
+		}
+	}
+
+	if(Environment.current == Environment.PRODUCTION) {
+		info 'com.postmortem', 'grails.app'
+		appenders {
+			'null' name: "stacktrace" // Desabilitando stacktrace para PROD
+		}		
+	} else {
+		debug 'com.postmortem', 'grails.app'
+	}
+
+	info 'com.postmortem', 'grails.app'
+
+	error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
+				 'org.codehaus.groovy.grails.web.pages', //  GSP
+				 'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+				 'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+				 'org.codehaus.groovy.grails.web.mapping', // URL mapping
+				 'org.codehaus.groovy.grails.commons', // core / classloading
+				 'org.codehaus.groovy.grails.plugins', // plugins
+				 'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+				 'org.springframework',
+				 'org.hibernate',
+				 'net.sf.ehcache.hibernate'
 }
