@@ -60,8 +60,7 @@ background: -ms-linear-gradient(top, #529fdf 0%,#2d6a9c 66%,#2d6a9c 83%,#52a0df 
 background: linear-gradient(top, #529fdf 0%,#2d6a9c 66%,#2d6a9c 83%,#52a0df 100%);
 display:block;border:1px solid #003b8c;color:#FFF;
 font-family:'Lato',sans-serif;font-weight:300;text-transform:uppercase;border-radius:3px;
-text-shadow: 1px 2px 1px #000;-webkit-box-shadow: 0px 0px 15px 1px #FFF;box-shadow: 0px 0px 15px 1px #FFF;
-}
+text-shadow: 1px 2px 1px #000;-webkit-box-shadow: 0px 0px 15px 1px #FFF;box-shadow: 0px 0px 15px 1px #FFF;}
 
 .formButton:hover{background:#3a7db4;}
 .formButton:active{background:#2d6a9c;}
