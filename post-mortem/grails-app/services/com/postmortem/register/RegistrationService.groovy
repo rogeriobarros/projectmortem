@@ -17,8 +17,9 @@ class RegistrationService {
 		try{
 			def model = [registration: registration]
 			log.info "[EMAIL] enviando email de ativação de loja para: ${registration.email} "
+			
 			mailService.sendMail {
-				from grailsApplication.config.mail.from
+				from 'noreply-postmorte@postmortem.com' //grailsApplication.config.'default'.from
 				to registration.email
 				subject "Ativação da sua conta Post Mortem"
 				body(view:"/registration/activation", model: model)

@@ -96,15 +96,17 @@ environments {
     }
 }
 
+grails.mail.default.from="noreply-postmorte@postmortem.com"
 grails {
 	mail {
-		host = '192.168.50.2'
-		port = 25
-		username = ''
-		password = ''
-		props = ["mail.smtp.auth" : false,
-				 "mail.smtp.socketFactory.port" : 25,
-				 "mail.smtp.socketFactory.fallback" : false]
+		host = 'smtp.gmail.com'
+		port = 465
+		username = 'userbucha@gmail.com'
+		password = 'rogerio123'
+		props = [ "mail.smtp.auth":"true", 					   
+	              "mail.smtp.socketFactory.port": "465",
+	              "mail.smtp.socketFactory.class": "javax.net.ssl.SSLSocketFactory",
+	              "mail.smtp.socketFactory.fallback": "false"]
 
 	}
 }

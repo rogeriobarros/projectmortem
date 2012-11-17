@@ -4,7 +4,7 @@ import com.postmortem.security.Registration;
 
 class RegistrationController {
 	
-	def registrationService, jcaptchaService
+	def registrationService, jcaptchaService, personService
 	
 	def create = { }
 	
@@ -15,7 +15,8 @@ class RegistrationController {
 			registrationService.sendActivationEmail(registration)
 			log.info "Registration ${registration.id} salva com sucesso."
 			flash.message = g.message(code:'registration.creation.success', args:[registration.email])
-			render view: 'success'
+			//render view: 'success'
+			redirect(controller: "person",  action: "list")
 		}else{
 			render view: 'create', model: [registration: registration]
 		}
@@ -31,6 +32,21 @@ class RegistrationController {
 		registrationService.sendActivationEmail(registration)
 		flash.message = g.message(code:'registration.activation.sent')
 		render view: 'success'
+	}
+	
+	def activate = {
+		def registration = Registration.get(params.id)
+		
+		if(registration && registration.activationCode == params.activation){
+			
+			def person = personService.createOnRegister(registration)
+			
+			flash.message = g.message(code:'registration.activation.active')
+			redirect(controller: "person",  action: "show", id: person.id)
+		}else{
+			flash.message = g.message(code:'registration.activation.failed')
+			render view: 'error'
+		}
 	}
 	
 	def success = { }
