@@ -1,3 +1,4 @@
+<!-- Cabecalho -->
 <title>Post Mortem - Revele seus segredos sem culpa</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,3 +15,4 @@
 <script src="${resource(dir:'js/jquery', file:'timepicker.js')}" type="text/javascript"></script>		
 <script src="${resource(dir:'js/jquery', file:'jquery.price_format.1.3.js')}" type="text/javascript"></script>
 <script src="${resource(dir:'js/jquery/ui/i18n', file:'ui.datepicker-pt-BR.js')}" type="text/javascript"></script>
+<!-- Fim-Cabecalho -->

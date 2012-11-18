@@ -13,7 +13,7 @@ h2{font-size:1.75em;}
 /* estrutura */
 
 #content{max-width:990px;margin:0 auto;padding-bottom:1.5em;}
-#mainHl{background:#ffa200;border-top:1px solid #cf8400;border-bottom:1px solid #bf7900;overflow:hidden;}
+#mainHl{background:#B9C065;border-top:1px solid #A9C400;border-bottom:1px solid #C9C900;overflow:hidden;}
 .enterprisePage #mainHl{background:#000;border-top:1px solid #666;border-bottom:1px solid #CCC;}
 .enterprisePage #content{max-width:100%;}
 
@@ -60,7 +60,7 @@ background: -ms-linear-gradient(top, #529fdf 0%,#2d6a9c 66%,#2d6a9c 83%,#52a0df 
 background: linear-gradient(top, #529fdf 0%,#2d6a9c 66%,#2d6a9c 83%,#52a0df 100%);
 display:block;border:1px solid #003b8c;color:#FFF;
 font-family:'Lato',sans-serif;font-weight:300;text-transform:uppercase;border-radius:3px;
-text-shadow: 1px 2px 1px #000;-webkit-box-shadow: 0px 0px 15px 1px #FFF;box-shadow: 0px 0px 15px 1px #FFF;}
+text-shadow: 1px 2px 1px #000;-webkit-box-shadow: 0px 0px 25px 1px #FFF;box-shadow: 0px 0px 255px 1px #FFF;}
 
 .formButton:hover{background:#3a7db4;}
 .formButton:active{background:#2d6a9c;}
@@ -73,8 +73,6 @@ background: -ms-linear-gradient(top, #CCC 0%,#999 66%,#999 83%,#CCC 100%);
 background: linear-gradient(top, #CCC 0%,#999 66%,#999 83%,#CCC 100%);}
 
 .formButton.big{display:block;width:100%;margin:0 -1px;padding:12px 0;font-size:1.25em;}
-
-
 
 /*padroes*/
 

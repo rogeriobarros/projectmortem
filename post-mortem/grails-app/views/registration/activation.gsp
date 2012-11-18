@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-  <title>PostMortem</title>
+  <title>Post Mortem</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="background:#ffb02d;text-align:center;" bgcolor="#ffb02d">
@@ -29,7 +29,7 @@
 
               <ol>
                 <li>Primeiro de tudo, ative sua loja <a href="${createLink(absolute:true, controller:'registration', action:'activate', params:[id: registration.id, activation: registration.activationCode])}" target="blank"> clicando aqui</a>.</li>
-                <li>Se não conseguir copie e cole este link na barra de endereços de seu navegador: ${createLink(absolute: true, controller:'registration', action:'activate', params:[id: registration.id, activation: registration.activationCode])} </li>
+                <li>Se não conseguir copie e cole este link na barra de endereços de seu navegador: ${createLink(controller:'registration', action:'activate', params:[id: registration.id, activation: registration.activationCode])} </li>
                 <li>Para convidar as pessoas para compartilhar seu pacto de segredo, acesse: <a href="http://${InetAddress.getLocalHost()}/person/">http://${InetAddress.getLocalHost()}/person/</a></li>
               </ol>
               

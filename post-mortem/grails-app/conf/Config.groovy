@@ -137,13 +137,11 @@ jcaptchas {
 		 )
  }
 
-def adminConfigRoles = ['IS_AUTHENTICATED_ANONYMOUSLY']
+def adminConfigRoles = ['ROLE_ADMIN', 'ROLE_USER', 'IS_AUTHENTICATED_FULLY']
 
 def roles = [
 	'/runtimeLogging/**' : adminConfigRoles,
-	'/content/**' : adminConfigRoles,
-	'/logout/**' : ['IS_AUTHENTICATED_FULLY'],
-	'/login/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
+	'/person/**' : adminConfigRoles,
 	'/images/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/css/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/js/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
@@ -152,11 +150,16 @@ def roles = [
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.postmortem.security.Person'
+grails.plugins.springsecurity.userLookup.passwordPropertyName="password"
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.postmortem.security.PersonAuthority'
 grails.plugins.springsecurity.authority.className = 'ccom.postmortem.security.Authority'
+grails.plugins.springsecurity.password.algorithm = "SHA-512"
+
 grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = roles
-grails.plugins.springsecurity.password.algorithm = "SHA-1"
+
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/person'
+grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login'
 
 if(Environment.currentEnvironment == Environment.PRODUCTION) {
 	def authBasicFilters = 'httpSessionContextIntegrationFilterWithASCFalseBasicAuth,basicProcessingFilterBasicAuth,exceptionTranslationWithASCFilterBasicAuth,filterInvocationInterceptor'

@@ -3,44 +3,42 @@
 <head>
 	<title>Faça seu cadastro</title>
 	<meta name="layout" content="main" />
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#tos').click(function() {
+		        if ($(this).is(':checked')) {
+		            $('#submit').removeAttr('disabled');
+		        } else {
+		            $('#submit').attr('disabled', 'disabled');
+		        }
+	        });
+		});
+		
+		function removeInvalidCharacters(word) {
+			var invalidCharacters = 'áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ';
+			var validCharacters = 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC';
+			var newString = ''
+			for(i=0 ; i < word.length ; i++) {
+				if(invalidCharacters.search(word.substr(i,1)) >= 0) {
+					newString += validCharacters.substr(invalidCharacters.search(word.substr(i,1)), 1)
+				}else {
+					newString += word.substr(i,1);
+				}
+			}
+			return newString.toLowerCase().split(' ').join('');
+		}
+		
+	</script>
 
 </head>
 
 <body>
-<script type="text/javascript">
-$(document).ready(function() {
- $('#tos').click(function() {
-        if ($(this).is(':checked')) {
-            $('#submit').removeAttr('disabled');
-            } 
-        else {
-            $('#submit').attr('disabled', 'disabled');
-            }
-        });
-});
-
-
-
-function removeInvalidCharacters(word) {
-	var invalidCharacters = 'áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ';
-	var validCharacters = 'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC';
-	var newString = ''
-	for(i=0 ; i < word.length ; i++) {
-		if(invalidCharacters.search(word.substr(i,1)) >= 0) {
-			newString += validCharacters.substr(invalidCharacters.search(word.substr(i,1)), 1)
-		}else {
-			newString += word.substr(i,1);
-		}
-	}
-	return newString.toLowerCase().split(' ').join('');
-}
-
-</script>	
+	
 
 
 	<article id="page">
 		<!-- header -->
-			<g:render template="/layouts/head" />
 
 		<!-- conteudo principal -->
 		<section id="content">
@@ -129,7 +127,6 @@ function removeInvalidCharacters(word) {
 		</section>
 
 		<!-- footer -->
-		<g:render template="/layouts/footer" />
 		
 	</article>
 
