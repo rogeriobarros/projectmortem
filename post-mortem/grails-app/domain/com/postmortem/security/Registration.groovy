@@ -28,11 +28,11 @@ class Registration implements Serializable{
 	}
 	
 	def activate(){
-		activationCode = null
+		this.activationCode = null
 	}
 	
 	private void encodePassword(){
 		this.passwordConfirmation = null
-		this.password = this.password.encodeAsSHA1()
+		this.password = this.password.encodeAsSHA256()
 	}
 }

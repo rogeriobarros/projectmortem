@@ -15,8 +15,8 @@ class RegistrationController {
 			registrationService.sendActivationEmail(registration)
 			log.info "Registration ${registration.id} salva com sucesso."
 			flash.message = g.message(code:'registration.creation.success', args:[registration.email])
-			//render view: 'success'
-			redirect(controller: "person",  action: "list")
+			render view: 'success'
+			//redirect(controller: "person",  action: "list")
 		}else{
 			render view: 'create', model: [registration: registration]
 		}
@@ -30,7 +30,7 @@ class RegistrationController {
 	def resendActivation = {
 		def registration = Registration.findByEmail(params.email)
 		registrationService.sendActivationEmail(registration)
-		flash.message = g.message(code:'registration.activation.sent')
+		flash.message = g.message(code:'registration.activation.resent')
 		render view: 'success'
 	}
 	
@@ -38,11 +38,15 @@ class RegistrationController {
 		def registration = Registration.get(params.id)
 		
 		if(registration && registration.activationCode == params.activation){
-			
-			def person = personService.createOnRegister(registration)
-			
-			flash.message = g.message(code:'registration.activation.active')
-			redirect(controller: "person",  action: "show", id: person.id)
+			try{
+				def person = personService.createOnRegister(registration)
+				flash.message = g.message(code:'registration.activation.active')
+				redirect(controller: "person",  action: "show", id: person.id)
+			}catch(e){
+				log.error e
+				flash.message = g.message(code:'registration.activation.failed')
+				render view: 'error'
+			}
 		}else{
 			flash.message = g.message(code:'registration.activation.failed')
 			render view: 'error'

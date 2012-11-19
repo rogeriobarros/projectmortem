@@ -7,9 +7,6 @@
 <body>
 	
 	<article id="page">
-		<!-- header -->
-			<g:render template="/layouts/head" />
-
 		<!-- conteudo principal -->
 		<section id="content">
 

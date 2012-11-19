@@ -1,5 +1,7 @@
 package com.postmortem.security
 
+import com.postmortem.aggregates.*
+
 
 class Person implements Serializable {
 		
@@ -13,13 +15,17 @@ class Person implements Serializable {
 	transient springSecurityService
 
 	static constraints = {
-		username blank: false, unique: true, email: true
-		password blank: false
+		username (blank: false, unique: true, email: true)
+		password (blank: false)
+		addresses (nullable:true)
+		propertyValues (nullable:true)
 	}
 
 	static mapping = {
 		password column: '`password`'
 	}
+	
+	static hasMany = [addresses: Address, propertyValues : PersonPropertyValue]
 
 	Set<Authority> getAuthorities() {
 		PersonAuthority.findAllByUser(this).collect { it.role } as Set

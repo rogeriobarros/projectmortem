@@ -2,6 +2,8 @@ package com.postmortem.security
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import com.postmortem.aggregates.PropertyDefinition;
+
 class PersonController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -100,4 +102,18 @@ class PersonController {
             redirect(action: "show", id: params.id)
         }
     }
+	
+	private void createDynamicPersonProperties(personInstance, params){
+		PropertyDefinition.findAllBySoftDeleted(false).each{
+			def userProperty = new PropertyValue(propertyDefinition: it)
+			if(params){
+				if(it.type == Boolean){
+					userProperty.value = params."${it.name}" as Boolean
+				}else{
+					userProperty.value = params."${it.name}"
+				}
+			}
+			personInstance.addToPropertyValues(userProperty)
+		}
+	}
 }
