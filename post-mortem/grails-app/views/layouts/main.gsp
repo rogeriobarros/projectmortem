@@ -51,7 +51,9 @@
 					</form>
 				</sec:ifNotLoggedIn>
 				<sec:ifLoggedIn>
-					<label><g:link controller="logout" action="index">Logout</g:link></label>
+					<a class="logo" href="${createLink(controller:'logout', action:'index')}" title="Sair do Post Mortem">
+						<img src="${resource(dir:'images', file:'logout.jpg')}" alt="logoout" />
+					</a>
 				</sec:ifLoggedIn>	
 			</div>
 		</div>
