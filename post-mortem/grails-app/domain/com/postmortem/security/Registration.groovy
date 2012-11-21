@@ -33,6 +33,6 @@ class Registration implements Serializable{
 	
 	private void encodePassword(){
 		this.passwordConfirmation = null
-		this.password = this.password.encodeAsSHA256()
+		this.password = this.password.encodeAsBase64()
 	}
 }

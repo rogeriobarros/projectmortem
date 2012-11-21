@@ -16,7 +16,6 @@ class RegistrationController {
 			log.info "Registration ${registration.id} salva com sucesso."
 			flash.message = g.message(code:'registration.creation.success', args:[registration.email])
 			render view: 'success'
-			//redirect(controller: "person",  action: "list")
 		}else{
 			render view: 'create', model: [registration: registration]
 		}
@@ -45,11 +44,11 @@ class RegistrationController {
 			}catch(e){
 				log.error e
 				flash.message = g.message(code:'registration.activation.failed')
-				render view: 'error'
+				render view: '/error'
 			}
 		}else{
 			flash.message = g.message(code:'registration.activation.failed')
-			render view: 'error'
+			render view: '/error'
 		}
 	}
 	

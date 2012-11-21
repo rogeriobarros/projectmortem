@@ -89,6 +89,8 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
+		def port = System.properties.getProperty("server.port")
+		grails.serverURL = "http://localhost:${port}/postmortem"
     }
     production {
         grails.logging.jul.usebridge = false
@@ -150,10 +152,12 @@ def roles = [
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.postmortem.security.Person'
-grails.plugins.springsecurity.userLookup.passwordPropertyName="password"
+grails.plugins.springsecurity.userLookup.passwordPropertyName = "password"
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.postmortem.security.PersonAuthority'
-grails.plugins.springsecurity.authority.className = 'ccom.postmortem.security.Authority'
-grails.plugins.springsecurity.password.algorithm = "SHA-512"
+grails.plugins.springsecurity.authority.className = 'com.postmortem.security.Authority'
+// Values can be
+// MD2, MD5, SHA-1, SHA-256, SHA-384, SHA-512
+grails.plugins.springsecurity.password.algorithm = "SHA-256"
 
 grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = roles

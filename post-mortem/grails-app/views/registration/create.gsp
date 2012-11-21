@@ -65,43 +65,40 @@
 					<form class="storeCreationForm" action="save" method="post" >
 						<div class="twoCol">
 							<div class="col1">
+								<g:if test="${registration?.errors?.getFieldError('name')}">
+									<g:set var="nameError" value="error" />
+								</g:if>
+								<div class="line ${nameError}">
+									<label for="name">Nome Completo:</label>
+									<g:textField name="name" value="${registration?.name}" />
 									<g:if test="${registration?.errors?.getFieldError('name')}">
-										<g:set var="nameError" value="error" />
+										<p class="alert"><g:message error="${registration?.errors?.getFieldError('name')}" /> </p>
 									</g:if>
-									<div class="line ${nameError}">
-										<label for="name">Nome Completo:</label>
-										<g:textField name="name" value="${registration?.name}" />
-										<g:if test="${registration?.errors?.getFieldError('name')}">
-											<p class="alert"><g:message error="${registration?.errors?.getFieldError('name')}" /> </p>
-										</g:if>
-									</div>
+								</div>
+								<g:if test="${registration?.errors?.getFieldError('email')}">
+									<g:set var="emailError" value="error" />
+								</g:if>
+								<div class="line ${emailError}">
+									<label for="email">E-mail:</label>
+									<g:textField name="email" value="${registration?.email}" />
 									<g:if test="${registration?.errors?.getFieldError('email')}">
-										<g:set var="emailError" value="error" />
+										<p class="alert"><g:message error="${registration?.errors?.getFieldError('email')}" /> </p>
 									</g:if>
-									<div class="line ${emailError}">
-										<label for="email">E-mail:</label>
-										<g:textField name="email" value="${registration?.email}" />
-										<g:if test="${registration?.errors?.getFieldError('email')}">
-											<p class="alert"><g:message error="${registration?.errors?.getFieldError('email')}" /> </p>
-										</g:if>
-									</div>
+								</div>
+								<g:if test="${registration?.errors?.getFieldError('password')}">
+									<g:set var="passwordError" value="error" />
+								</g:if>
+								<div class="line ${passwordError}">
+									<label for="password">Senha:</label>
+									<g:passwordField name="password"/>
 									<g:if test="${registration?.errors?.getFieldError('password')}">
-										<g:set var="passwordError" value="error" />
+										<p class="alert"><g:message error="${registration?.errors?.getFieldError('password')}" /> </p>
 									</g:if>
-									<div class="line ${passwordError}">
-										<label for="password">Senha:</label>
-										<g:passwordField name="password"/>
-										<g:if test="${registration?.errors?.getFieldError('password')}">
-											<p class="alert"><g:message error="${registration?.errors?.getFieldError('password')}" /> </p>
-										</g:if>
-									</div>
-									<div class="line">
-										<label for="passwordConfirmation">Confirmação de senha:</label>
-										<g:passwordField name="passwordConfirmation" />
-									</div>
-							</div>
-							<div class="col2">
-
+								</div>
+								<div class="line">
+									<label for="passwordConfirmation">Confirmação de senha:</label>
+									<g:passwordField name="passwordConfirmation" />
+								</div>
 							</div>
 						</div>
 
@@ -111,13 +108,13 @@
 								<textarea id="userAgreement" readonly><content:render name="tos-v1"/></textarea>
 							</div>
 							<div class="line">
-								<label for="tos"><g:checkBox name="tos"/> Li estou de acordo com os termos de uso</label>
-									<g:if test="${flash.tosError}">
-										<p class="alert">${flash.tosError}</p>
-									</g:if>
+								<label for="tos"><g:checkBox name="tos"/>Li estou de acordo com os termos de uso</label>
+								<g:if test="${flash.tosError}">
+									<p class="alert">${flash.tosError}</p>
+								</g:if>
 							</div>
 							<div class="line">
-								<g:submitButton name="submit" value="Registe-se" class="formButton big" disabled="disabled"/>
+								<g:submitButton name="submit" value="Registre-se" class="formButton big" disabled="disabled"/>
 							</div>
 						</div>
 					</form>
@@ -125,9 +122,6 @@
 			</div>
 
 		</section>
-
-		<!-- footer -->
-		
 	</article>
 
 </body>

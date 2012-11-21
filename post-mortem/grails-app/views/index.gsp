@@ -55,10 +55,9 @@
                 	<li>
                 		<article>
                 			<header>
-                				<g:link controller="registration" action="create">Cadastre-se</g:link>
+                				<g:link controller="registration" action="create">Cadastre-se aqui</g:link>
                 				<section>
-                					<h4>Cadastre-se aqui</h4>
-                						<p>Levam apenas uns minutinhos.</p>
+                					<p>Levam apenas uns minutinhos.</p>
                 				</section>
                 			</header>
                 		</article>

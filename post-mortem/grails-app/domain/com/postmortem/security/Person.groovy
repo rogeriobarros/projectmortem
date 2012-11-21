@@ -4,7 +4,8 @@ import com.postmortem.aggregates.*
 
 
 class Person implements Serializable {
-		
+
+	String name
 	String username
 	String password
 	boolean enabled
@@ -41,7 +42,7 @@ class Person implements Serializable {
 		}
 	}
 
-	protected void encodePassword() {
+	private void encodePassword() {
 		password = springSecurityService.encodePassword(password)
 	}
 		

@@ -16,7 +16,7 @@ class RegistrationService {
 	void sendActivationEmail(registration){
 		try{
 			def model = [registration: registration]
-			log.info "[EMAIL] enviando email de ativação de loja para: ${registration.email} "
+			log.info "[EMAIL] enviando email de ativacao de para: ${registration.email} "
 			
 			mailService.sendMail {
 				from 'noreply-postmorte@postmortem.com' //grailsApplication.config.'default'.from
@@ -25,7 +25,7 @@ class RegistrationService {
 				body(view:"/registration/activation", model: model)
 		    }
 		}catch(e){
-			log.error "[EMAIL] Erro ao enviar email de ativação para (${registration.email})", e
+			log.error "[EMAIL] Erro ao enviar email de ativacao para (${registration.email})", e
 		}
 	}
 
