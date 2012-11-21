@@ -13,12 +13,11 @@
 		<div class="alert alert-success">
 	       	${flash.message}
 	    </div>
-	    <p></p>
+	    <p>Parabéns!</p>
+	    <p>Você acaba de ativar sua conta conosco. <br>
+	    Seja bem vindo!</p>
 
 	</article>
-
-	<!-- footer -->
-	<g:render template="/layouts/footer" />
 
 </body>
 </html>

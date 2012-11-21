@@ -89,7 +89,7 @@ grails.hibernate.cache.queries = true
 environments {
     development {
         grails.logging.jul.usebridge = true
-		def port = System.properties.getProperty("server.port")
+		def port = System.properties.getProperty("server.port") ?: "8080"
 		grails.serverURL = "http://localhost:${port}/postmortem"
     }
     production {

@@ -4,22 +4,23 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'person.label', default: 'Person')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<title>Post Morte - Usuário</title>
 	</head>
 	<body>
-		<a href="#show-person" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
+		<nav class="bCrumbs">
+			<a href="/">home</a> &gt; 
+			<b>Seus Dados</b>
+		</nav>
+		<div class="topMenu" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li class="menuItem"><g:link class="list" controller="alliance" action="list">Listar Pactuantes</g:link></li>
+				<li class="menuItem"><g:link class="create" controller="alliance" action="create">Novo Documento</g:link></li>
 			</ul>
 		</div>
 		<div id="show-person" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<h1>${personInstance.name}</h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list person">
 			

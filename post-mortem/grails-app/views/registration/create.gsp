@@ -28,18 +28,12 @@
 			}
 			return newString.toLowerCase().split(' ').join('');
 		}
-		
 	</script>
 
 </head>
 
 <body>
-	
-
-
 	<article id="page">
-		<!-- header -->
-
 		<!-- conteudo principal -->
 		<section id="content">
 
@@ -123,6 +117,5 @@
 
 		</section>
 	</article>
-
 </body>
 </html>

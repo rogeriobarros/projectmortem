@@ -40,7 +40,7 @@ class RegistrationController {
 			try{
 				def person = personService.createOnRegister(registration)
 				flash.message = g.message(code:'registration.activation.active')
-				redirect(controller: "person",  action: "show", id: person.id)
+				render view: 'success'
 			}catch(e){
 				log.error e
 				flash.message = g.message(code:'registration.activation.failed')
