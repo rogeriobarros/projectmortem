@@ -139,11 +139,19 @@ jcaptchas {
 		 )
  }
 
-def adminConfigRoles = ['ROLE_ADMIN', 'ROLE_USER', 'IS_AUTHENTICATED_FULLY']
+def adminConfigRoles = ['ROLE_ADMIN']
+def userConfigRoles = ['ROLE_USER']
 
 def roles = [
 	'/runtimeLogging/**' : adminConfigRoles,
-	'/person/**' : adminConfigRoles,
+	'/person/list' : adminConfigRoles,
+	'/person/create/**' : adminConfigRoles,
+	'/person/save/**' : adminConfigRoles,
+	'/person/edit/**' : adminConfigRoles,
+	'/person/update/**' : adminConfigRoles,
+	'/person/delete/**' : adminConfigRoles,
+	'/person/show/**' :  userConfigRoles,
+	'/person/**' :  ['IS_AUTHENTICATED_FULLY'],
 	'/images/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/css/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/js/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
@@ -162,7 +170,7 @@ grails.plugins.springsecurity.password.algorithm = "SHA-256"
 grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.InterceptUrlMap
 grails.plugins.springsecurity.interceptUrlMap = roles
 
-grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/person'
+grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/person/show'
 grails.plugins.springsecurity.failureHandler.defaultFailureUrl = '/login'
 
 if(Environment.currentEnvironment == Environment.PRODUCTION) {

@@ -17,6 +17,10 @@ class BootStrap {
 		if (!adminUser.authorities.contains(adminAuth)) {
 			PersonAuthority.create adminUser, adminAuth
 		}
+		
+		if (!adminUser.authorities.contains(userAuth)) {
+			PersonAuthority.create adminUser, userAuth
+		}
     }
     def destroy = {
     }

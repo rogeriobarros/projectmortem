@@ -7,6 +7,8 @@ import com.postmortem.aggregates.PropertyDefinition;
 class PersonController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
+	def springSecurityService
 
     def index() {
         redirect(action: "list", params: params)
@@ -33,9 +35,11 @@ class PersonController {
     }
 
     def show() {
-        def personInstance = Person.get(params.id)
+		def personId = (springSecurityService.isLoggedIn()) ? springSecurityService.principal.id : params.id
+		
+        def personInstance = Person.get(personId)
         if (!personInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'Person'), params.id])
+			flash.message = g.message(code:'person.found.failed', args:[personId])
             redirect(action: "list")
             return
         }

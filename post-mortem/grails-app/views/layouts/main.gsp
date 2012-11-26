@@ -16,44 +16,52 @@
 			</a>
 			<div class="topMenu">
 				<sec:ifNotLoggedIn>
-					<g:set var="postUrl" value="${request.contextPath}${SpringSecurityUtils.securityConfig.apf.filterProcessesUrl}" />
-					<form id="login_form" action="${postUrl}" method="post"> <%--"${createLink(controller: 'login', action:'index')}" --%>
-						<table cellspacing="0" class="twoCol">
-							<tbody>
-								<tr>
-									<td class="line">
-										<label for="username">E-mail</label>
-									</td>
-									<td class="line">
-										<label for="password">Senha</label>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type='text' class='kanloUrlInput' name='j_username' id='username' value="" tabindex="1"/>
-									</td>
-									<td>
-										<input type='password' class='kanloUrlInput' name='j_password' id='password' tabindex="2"/>
-									</td>
-									<td>
-										<label id="loginbutton" for="submitBtn">
-											<input class="formButton" value="Entrar" tabindex="3" type="submit" id="submitBtn" />
-										</label>
-									</td>
-								</tr>
-								<tr>
-									<td class="line">
-										<a rel="nofollow" href="#">Esqueceu sua senha?</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
+					<div class="login">
+						<g:set var="postUrl" value="${request.contextPath}${SpringSecurityUtils.securityConfig.apf.filterProcessesUrl}" />
+						<form id="login_form" action="${postUrl}" method="post">
+							<table cellspacing="0" class="twoCol">
+								<tbody>
+									<tr>
+										<td class="line">
+											<label for="username">E-mail</label>
+										</td>
+										<td class="line">
+											<label for="password">Senha</label>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input type='text' class='kanloUrlInput' name='j_username' id='username' value="" tabindex="1"/>
+										</td>
+										<td>
+											<input type='password' class='kanloUrlInput' name='j_password' id='password' tabindex="2"/>
+										</td>
+										<td>
+											<label id="loginbutton" for="submitBtn">
+												<input class="formButton" value="Entrar" tabindex="3" type="submit" id="submitBtn" />
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td class="line">
+											<a rel="nofollow" href="#">Esqueceu sua senha?</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
 				</sec:ifNotLoggedIn>
 				<sec:ifLoggedIn>
-					<a class="logo" href="${createLink(controller:'logout', action:'index')}" title="Sair do Post Mortem">
-						<img src="${resource(dir:'images', file:'logout.jpg')}" alt="logoout" />
-					</a>
+					<div class="login">
+						<div class="twoCol">
+							<div class="col1">Olá, <sec:username/> </div>
+							<div class="col2">
+								<a class="logo" href="${createLink(controller:'logout', action:'index')}" title="Sair do Post Mortem">
+								<img src="${resource(dir:'images', file:'logout.jpg')}" alt="logoout" /></a>
+							</div>
+						</div>
+					</div>
 				</sec:ifLoggedIn>	
 			</div>
 		</div>
