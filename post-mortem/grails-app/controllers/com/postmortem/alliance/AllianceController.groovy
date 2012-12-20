@@ -29,6 +29,30 @@ class AllianceController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'alliance.label', default: 'Alliance'), allianceInstance.id])
         redirect(action: "show", id: allianceInstance.id)
     }
+	
+	def upload = {
+		def txtFile = request.getFile('textFile')
+		def sndFile = request.getFile('soundFile')
+		def imgFile = request.getFile('imageFile')
+		def vidFile = request.getFile('videoFile')
+		
+		def allianceInstance = Alliance.get(params.id)
+		try{
+			allianceInstance.with{
+				textFile: txtFile
+				soundFile: sndFile
+				imageFile: imgFile
+				videoFile: vidFile
+			}
+			
+			allianceInstance.save()
+			redirect(action: 'show', params: [id: allianceInstance.id])
+		}catch(e){
+			log.error e
+			flash.message = "Não foi possivel recuperar dados do servido!"
+			redirect(action: 'index')
+		}
+	}
 
     def show() {
         def allianceInstance = Alliance.get(params.id)

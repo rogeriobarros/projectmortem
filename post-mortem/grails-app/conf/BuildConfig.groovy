@@ -4,13 +4,16 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
-//grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
+		excludes 'org.springframework:spring-test:3.1.0.RELEASE'
+		excludes 'commons-io:commons-io:1.3.1'
+		excludes 'commons-codec:commons-codec:1.3'
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
@@ -40,8 +43,17 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
+		
+		compile (){
+					excludes('groovy','junit', 'stax-api', 'org.apache.commons:commons-io',
+							 'spring-core', 'spring-beans', 'spring-oxm', 'spring-oxm-tiger',
+							 'spring-aop', 'spring-asm', 'spring-context', 'spring-expression',
+							 'spring-security-core', 'spring-security-web', 'spring-test', 'spring-tx',
+							 'spring-web', 'org.springframework:spring-test:3.1.0.RELEASE','xml-resolver',
+							 'commons-codec:commons-codec:1.3','commons-io:commons-io:1.3.1','commons-logging')
+				}
 
-        runtime 'mysql:mysql-connector-java:5.1.20'
+        runtime ('mysql:mysql-connector-java:5.1.20')
     }
 
     plugins {

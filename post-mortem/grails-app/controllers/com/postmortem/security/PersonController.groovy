@@ -3,6 +3,7 @@ package com.postmortem.security
 import org.springframework.dao.DataIntegrityViolationException
 
 import com.postmortem.aggregates.PropertyDefinition;
+import com.postmortem.security.utils.CipherUtil;
 
 class PersonController {
 
@@ -35,8 +36,10 @@ class PersonController {
     }
 
     def show() {
-		def personId = (springSecurityService.isLoggedIn()) ? springSecurityService.principal.id : params.id
-		
+		def personId
+		if(springSecurityService.isLoggedIn()){
+			personId = params.id ?: springSecurityService.principal.id 
+		}
         def personInstance = Person.get(personId)
         if (!personInstance) {
 			flash.message = g.message(code:'person.found.failed', args:[personId])

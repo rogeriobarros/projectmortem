@@ -152,6 +152,16 @@ def roles = [
 	'/person/delete/**' : adminConfigRoles,
 	'/person/show/**' :  userConfigRoles,
 	'/person/**' :  ['IS_AUTHENTICATED_FULLY'],
+	
+	'/alliance/list' :  userConfigRoles,
+	'/alliance/create/**' :  userConfigRoles,
+	'/alliance/save/**' :  userConfigRoles,
+	'/alliance/edit/**' :  userConfigRoles,
+	'/alliance/update/**' :  userConfigRoles,
+	'/alliance/delete/**' :  userConfigRoles,
+	'/alliance/show/**' :  userConfigRoles,
+	'/alliance/**' :  ['IS_AUTHENTICATED_FULLY'],
+	
 	'/images/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/css/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/js/**' : ['IS_AUTHENTICATED_ANONYMOUSLY'],

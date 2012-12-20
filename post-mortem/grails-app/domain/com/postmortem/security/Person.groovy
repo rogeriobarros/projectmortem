@@ -1,6 +1,7 @@
 package com.postmortem.security
 
 import com.postmortem.aggregates.*
+import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
 
 
 class Person implements Serializable {
@@ -45,5 +46,10 @@ class Person implements Serializable {
 	private void encodePassword() {
 		password = springSecurityService.encodePassword(password)
 	}
-		
+
+	@Override
+	public String toString() {
+		name
+	}
+	
 }

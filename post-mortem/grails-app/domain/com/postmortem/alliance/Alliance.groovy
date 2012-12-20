@@ -6,6 +6,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 //import org.hibernate.lob.BlobImpl;
 
 import com.postmortem.security.Person
+import com.postmortem.security.utils.CipherUtil;
 
 class Alliance {
 	
@@ -55,6 +56,16 @@ class Alliance {
 		} 
 	}
 	
+	def beforeInsert() {
+		cripyt()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('alliancePersons')) {
+			cripyt()
+		}
+	}
+	
 	Long getSize(file) {
 		return file?.length() ?: 0
 	}
@@ -85,6 +96,22 @@ class Alliance {
 		tmpFile
 	}
 	
+	def getRegisterDecode(){
+		decrypt(this.register)
+	}
+	
+	def getNameSoundFileDecode(){
+		decrypt(this.nameSoundFile)
+	}
+	
+	def getNameImageFileDecode(){
+		decrypt(this.nameImageFile)
+	}
+	
+	def getNameVideoFileDecode(){
+		decrypt(this.nameVideoFile)
+	}
+	
 	private getAllianceFileType(type){
 		switch(type){
 			case AllianceFileType.DOC : return [nameTextFile, textFile]
@@ -96,6 +123,19 @@ class Alliance {
 			case AllianceFileType.VIDEO : return [nameVideoFile, videoFile]
 				break
 		}
+	}
+	
+	private void cripyt(){
+		def cipher = new CipherUtil()
+		(register) ? register = cipher.encrypt(this.register) : null
+		(nameTextFile) ? nameTextFile = cipher.encrypt(this.nameTextFile) : null
+		(nameSoundFile) ? nameSoundFile = cipher.encrypt(this.nameSoundFile) : null
+		(nameImageFile) ? nameImageFile = cipher.encrypt(this.nameImageFile) : null
+		(nameVideoFile) ? nameVideoFile = cipher.encrypt(this.nameVideoFile) : null
+	}
+	
+	private decrypt(digested){
+		new CipherUtil().decrypt(digested)
 	}
 }
 
